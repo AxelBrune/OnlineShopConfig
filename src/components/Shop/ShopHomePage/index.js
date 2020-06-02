@@ -1,8 +1,14 @@
-import React from 'react';
-
+import React,{Fragment} from 'react';
+import Header from "../Header";
+import Footer from "../Footer";
 function ShopHomePage(){
     return(
-        <h1>Online Shopping</h1>
+        <Fragment>
+            <Header/>
+            <center><h1>Bienvenue sur NOM DU MAGASIN</h1></center><br/>
+            <h3>Liste des produits</h3> <br/>
+            <Footer />
+        </Fragment>
     )
 }
 

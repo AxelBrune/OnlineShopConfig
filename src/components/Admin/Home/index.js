@@ -1,7 +1,7 @@
 import React,{Fragment} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Container, Row, Col, Button} from 'react-bootstrap';
-function Home(){
+const Home = () =>{
     return(
         <Container>
             <Row>
