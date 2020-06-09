@@ -15,7 +15,7 @@ const Header = () =>{
             <Helmet>
                 <title>{shopName}</title>
             </Helmet>
-            <header>
+            <header id="adminheader">
             <Navbar bg="dark" expand="lg" variant="dark">
             <Navbar.Brand href="/admin" >Interface administrateur de {shopName}</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+#adminheader {
+  padding-bottom: 1rem;
+}

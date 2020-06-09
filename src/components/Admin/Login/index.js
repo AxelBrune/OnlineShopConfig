@@ -1,7 +1,7 @@
 import React,{useState, Fragment, useContext, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import {firebaseContext} from "../../Firebase";
-import {Container, Row, Col} from 'react-bootstrap';
+import {Container, Row, Col, Alert} from 'react-bootstrap';
 import Header from '../Header';
 const Login = (props) =>{
 
@@ -43,7 +43,7 @@ const Login = (props) =>{
                 <Row>
                     <Col md={{span:4, offset:4}}>
                         <h1 id="test">SE CONNECTER</h1> <br />
-                        {problem !== '' && <span>{problem.message}</span>}
+                        {problem !== '' && <Alert variant="danger">{problem.message}</Alert>}
                         <br />
                     </Col>
                 </Row>
