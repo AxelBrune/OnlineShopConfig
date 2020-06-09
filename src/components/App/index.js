@@ -5,6 +5,7 @@ import Home from '../Admin/Home';
 import ShopHomePage from '../Shop/ShopHomePage';
 import Login from '../Admin/Login';
 import ErrorPage from '../ErrorPage';
+import CreateProduct from "../Admin/CreateProduct";
 function App(){
     return(
         <Router>
@@ -12,6 +13,7 @@ function App(){
                 <Route exact  path="/admin" component={Login} />
                 <Route exact path="/" component={ShopHomePage} />
                 <Route exact path="/admin/home" component={Home} />
+                <Route excat path="/admin/product/add" component={CreateProduct} />
                 <Route  component={ErrorPage} />
             </Switch>
         </Router>

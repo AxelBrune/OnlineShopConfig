@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 
 const config = {
     apiKey: "AIzaSyClpjyJ7UP2Zcf_km0qJ0GC_zMRXk0yK2s",
@@ -17,6 +18,7 @@ class Firebase{
         app.initializeApp(config);
         this.auth = app.auth();
         this.db = app.firestore();
+        this.storage=app.storage();
     }
 
     signUp = (email,password) => this.auth.createUserWithEmailAndPassword(email, password);
