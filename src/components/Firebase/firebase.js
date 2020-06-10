@@ -25,6 +25,16 @@ class Firebase{
     loginUser = (email, password) => this.auth.signInWithEmailAndPassword(email, password);
     signOutUser = (email, password) => this.auth.signOut();
     shopName = name => this.db.doc("ShopName/S3zQqF5Yv7A8bSHlLQiY");
+
+    getProducts = () => {
+      return  new Promise((onSuccess, onFail) => {
+            this.db.collection("products").get()
+            .then(querySnapshot => {
+                onSuccess(querySnapshot);
+            })
+            .catch(error => onFail(error))
+        })
+    }
 }
 
 export default Firebase;

@@ -45,7 +45,7 @@ const Home = () =>{
 
     const handleSubmit = e =>{
         e.preventDefault();
-        const uploadTask = firebase.storage.ref(`images/${image.name}`).put(image);
+        const uploadTask = firebase.storage.ref(`images/${productName}`).put(image);
         uploadTask.on('state_changed',
             (snapshot) =>{
                 const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes)*100);
@@ -55,7 +55,7 @@ const Home = () =>{
                 console.log(error);
             },
             () => {
-                firebase.storage.ref('images').child(image.name).getDownloadURL()
+                firebase.storage.ref('images').child(productName).getDownloadURL()
                 .then(ur => {
                     console.log(ur);
                     setImageUrl(ur);
