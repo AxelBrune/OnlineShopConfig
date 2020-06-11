@@ -35,6 +35,16 @@ class Firebase{
             .catch(error => onFail(error))
         })
     }
+
+     deleteProduct = id =>{
+             this.db.doc(`products/${id}`).delete()
+             .then(function(){
+                 console.log(`Élément d'id ${id} supprimé`);
+                 window.location.reload(false);
+             }).catch(function(err){
+                 console.log("Delete error : ", err);
+             })
+     }
 }
 
 export default Firebase;

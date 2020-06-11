@@ -1,9 +1,11 @@
 import React,{Fragment, useState, useEffect, useContext} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Container, Row, Col, Card, Form, Button, Modal, ProgressBar} from 'react-bootstrap';
+import {Container, Row, Col, Card, Form, Button, Modal, ProgressBar, Table} from 'react-bootstrap';
 import Header from '../Header';
 import {firebaseContext} from "../../Firebase";
-import CreateProduct from "../CreateProduct";
+import {BsPencil} from 'react-icons/bs';
+import {FaEraser} from "react-icons/fa";
+import { IconContext } from "react-icons";
 const Home = () =>{
     const firebase = useContext(firebaseContext);    
     const [shopName, setShopName] = useState("");
@@ -16,8 +18,29 @@ const Home = () =>{
     const [imageURL, setImageUrl] = useState('');
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
-    const [done, setDone] = useState(false);
     const [show, setShow] = useState(false);
+
+    const [products, setProducts] = useState([]);
+    firebase.db.collection("ShopName").doc("shop").get()
+        .then(function(doc){
+            setShopName(doc.data().name);
+        });
+
+    const fetchProducts = () =>{
+        firebase.getProducts()
+        .then(snapshot =>{
+            const elements = snapshot.docs.map(doc => doc);
+            // const id = snapshot.docs.map(el => el.id);
+
+            setProducts(products.concat(elements));
+            //setProducts(products => [...products, elements]);
+        })
+        .catch(error => console.log(error))
+    }
+
+    useEffect(()=>{
+        fetchProducts();
+    },[])
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -78,11 +101,21 @@ const Home = () =>{
                 setImage(null);
                 setProgress(0);
                 setImageUrl(null);
+                window.location.reload(false);
             })
             .catch(function(err){
                 console.log("Erreur lors de l'ajout : ", err);
             })
         }
+    }
+
+    const handleErase = (choice) =>{
+        console.log("Suppression : ", choice);
+        firebase.deleteProduct(choice);
+    }
+
+    const handleModif = () =>{
+        console.log("Modification");
     }
 
     return(
@@ -98,6 +131,7 @@ const Home = () =>{
                     <Button onClick={handleClose}>Fermer</Button>
                 </Modal.Footer>
             </Modal>
+
             <Header />
             <Container>
                 <Row>
@@ -115,7 +149,40 @@ const Home = () =>{
                         </Card>
                     </Col>
                     <Col>
-                    <h1>TABLE</h1>
+                        <Card bg="white" text="dark">                            
+                            <Card.Header>
+                                <h2>Gérer les articles</h2>
+                            </Card.Header>
+                            <Card.Body>
+                                <Table striped bordered hover size="sm">
+                                    <thead>
+                                        <tr>
+                                        <th>Nom du produit</th>
+                                        <th>Prix</th>
+                                        <th>Modifier</th>
+                                        <th>Supprimer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            products.map(
+                                                item =>(
+                                                <tr key={item.id}>
+                                                    <td>{item.data().productName}</td>
+                                                    <td>{item.data().price}</td>
+                                                    <IconContext.Provider value={{color: "blue"}}>
+                                                         <td><button onClick={handleModif}><BsPencil/></button></td>
+                                                    </IconContext.Provider>
+                                                    <IconContext.Provider value={{color: "red"}}>
+                                                        <td><button onClick={() => handleErase(item.id)}><FaEraser /></button></td>
+                                                    </IconContext.Provider>
+                                                </tr>
+                                                ))
+                                        }
+                                    </tbody>
+                                </Table>
+                            </Card.Body>
+                        </Card>
                     </Col>
                 </Row>
                 <br/>

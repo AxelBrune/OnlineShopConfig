@@ -3,12 +3,12 @@ import Header from "../Header";
 import Footer from "../Footer";
 import {firebaseContext} from "../../Firebase";
 import 'bootstrap/dist/css/bootstrap.css';
-import {Container, Row, Col, Card, Form, Button, Modal, ProgressBar} from 'react-bootstrap';
 function ShopHomePage(){
 
     const firebase = useContext(firebaseContext);
     const [shopName, setShopName] = useState("");
     const [products, setProducts] = useState([]);
+    const [ids, setIds] = useState([]);
     firebase.db.collection("ShopName").doc("shop").get()
         .then(function(doc){
             setShopName(doc.data().name);
@@ -17,10 +17,11 @@ function ShopHomePage(){
     const fetchProducts = () =>{
         firebase.getProducts()
         .then(snapshot =>{
-            const elements = snapshot.docs.map(doc => doc.data());
-             setProducts(products.concat(elements));
+            const elements = snapshot.docs.map(doc => doc);
+            // const id = snapshot.docs.map(el => el.id);
+
+            setProducts(products.concat(elements));
             //setProducts(products => [...products, elements]);
-            console.log(products);
         })
         .catch(error => console.log(error))
     }
@@ -36,7 +37,7 @@ function ShopHomePage(){
             <div>
                 <ul>
                     {
-                        products.map(item =>(<li>{item.productName}</li>))
+                        products.map(item =>(<li key={item.id}>{item.data().productName}</li>))
                     }
                 </ul>
             </div>
