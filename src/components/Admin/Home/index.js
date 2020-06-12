@@ -20,6 +20,14 @@ const Home = () =>{
     const [progress, setProgress] = useState(0);
     const [show, setShow] = useState(false);
 
+
+    const [selectedProduct, setSelectedProduct] = useState("");
+    const [showIdModal, setShowIdModal] = useState(false);
+    const [selectedId, setSelectedId] = useState("");
+    const [modifName, setModifName] = useState("");
+    const [modifDesc, setModifDesc] = useState("");
+    const [modifPrice, setModifPrice] = useState("");
+
     const [products, setProducts] = useState([]);
     firebase.db.collection("ShopName").doc("shop").get()
         .then(function(doc){
@@ -114,8 +122,39 @@ const Home = () =>{
         firebase.deleteProduct(choice);
     }
 
-    const handleModif = () =>{
-        console.log("Modification");
+    const handleModif = (choice) =>{
+        console.log("Modification ", choice.id);
+        setModifName(choice.data().productName);
+        setModifDesc(choice.data().description);
+        setModifPrice(choice.data().price);
+        setSelectedId(choice.id);
+        setShowIdModal(true);
+    }
+
+    const handleCloseModif = () => {
+        setShowIdModal(false);
+        setModifDesc("");
+        setModifName("");
+        setModifPrice("");
+    }
+    const confirmModif = () => {
+        console.log(selectedId);
+        var ref=firebase.db.collection("products").doc(selectedId);
+        return ref.update({
+            description: modifDesc,
+            price: modifPrice,
+            productName: modifName
+        })
+        .then(function(){
+            setShowIdModal(false);
+            setModifPrice("");
+            setModifDesc("");
+            setModifName("");
+            window.location.reload(false);
+        })
+        .catch(function(err){
+            console.log(err);
+        })
     }
 
     return(
@@ -130,6 +169,32 @@ const Home = () =>{
                 <Modal.Footer>
                     <Button onClick={handleClose}>Fermer</Button>
                 </Modal.Footer>
+            </Modal>
+
+            <Modal show={showIdModal} onHide={handleCloseModif}>
+                 <Modal.Header>
+                     <Modal.Title>Modifier un produit (remplissez les champs que vous souhaitez modifier)</Modal.Title>
+                 </Modal.Header>
+                 <Modal.Body>
+                        <Form>
+                            <Form.Group>
+                                <Form.Control type="text" placeholder="Produit" value={modifName} onChange={e => setModifName(e.target.value)}/>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control as="textarea" rows="3"  placeholder="Description" value={modifDesc} onChange={e =>setModifDesc(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control type="text" placeholder="5.00" value={modifPrice} onChange={e => setModifPrice(e.target.value)} />
+                            </Form.Group>
+                            {/* <Form.Group>
+                                <input type="file" onChange={handleChange}/>
+                            </Form.Group> */}
+                        </Form>
+                 </Modal.Body>
+                 <Modal.Footer>
+                     <Button variant="primary" onClick={confirmModif}>Modifier</Button>
+                     <Button variant="danger" onClick={handleCloseModif}>Fermer</Button>
+                 </Modal.Footer>
             </Modal>
 
             <Header />
@@ -171,7 +236,7 @@ const Home = () =>{
                                                     <td>{item.data().productName}</td>
                                                     <td>{item.data().price}</td>
                                                     <IconContext.Provider value={{color: "blue"}}>
-                                                         <td><button onClick={handleModif}><BsPencil/></button></td>
+                                                         <td><button onClick={() => handleModif(item)}><BsPencil/></button></td>
                                                     </IconContext.Provider>
                                                     <IconContext.Provider value={{color: "red"}}>
                                                         <td><button onClick={() => handleErase(item.id)}><FaEraser /></button></td>
