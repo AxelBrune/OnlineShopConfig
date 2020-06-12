@@ -3,6 +3,7 @@ import Header from "../Header";
 import Footer from "../Footer";
 import {firebaseContext} from "../../Firebase";
 import 'bootstrap/dist/css/bootstrap.css';
+import { Card, Container, Button, Col, Row } from 'react-bootstrap';
 function ShopHomePage(){
 
     const firebase = useContext(firebaseContext);
@@ -35,11 +36,30 @@ function ShopHomePage(){
             <center><h1>Bienvenue sur {shopName}</h1></center><br/>
             <h3>Liste des produits</h3> <br/>
             <div>
-                <ul>
+                <Container>
+                    <Row>
                     {
-                        products.map(item =>(<li key={item.id}>{item.data().productName}</li>))
+                        products.map(item =>(
+                                <Col xs="12" md="4" sm="12">
+                                    <Card style={{width : '18rem'}}>
+                                    <Card.Img variant="top" src={item.data().imageURL} width="288px" heigth="400px"/>
+                                    <Card.Body>
+                                        <Card.Title>{item.data().productName}</Card.Title>
+                                    <Card.Text>
+                                        <Container>
+                                            <Row>
+                                                <Button variant="success">Voir l'offre</Button>&nbsp;&nbsp; {`${item.data().price} €`}
+                                            </Row>
+                                        </Container>
+                                        
+                                    </Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                        ))
                     }
-                </ul>
+                    </Row>
+                </Container>
             </div>
             <Footer />
         </Fragment>

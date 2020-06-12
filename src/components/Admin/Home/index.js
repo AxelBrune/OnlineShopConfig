@@ -142,7 +142,7 @@ const Home = () =>{
                             </Card.Header>
                             <Card.Body>
                             <form onSubmit={changeName}>
-                                <input type="text" value={shopName} onChange={e=> setShopName(e.target.value)}/>
+                                <input type="text" value={shopName} onChange={e => setShopName(e.target.value)}/>
                                 <button className="btn btn-primary">Changer</button>
                             </form>
                             </Card.Body>
