@@ -4,6 +4,8 @@ import Footer from "../Footer";
 import {firebaseContext} from "../../Firebase";
 import 'bootstrap/dist/css/bootstrap.css';
 import { Card, Container, Button, Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 function ShopHomePage(){
 
     const firebase = useContext(firebaseContext);
@@ -48,7 +50,7 @@ function ShopHomePage(){
                                     <Card.Text>
                                         <Container>
                                             <Row>
-                                                <Button variant="success">Voir l'offre</Button>&nbsp;&nbsp; {`${item.data().price} €`}
+                                                <Link to={`/product/${item.id}`} style={{ color: 'white' }}><Button variant="success">Voir l'offre</Button></Link>&nbsp;&nbsp; {`${item.data().price} €`}
                                             </Row>
                                         </Container>
                                         

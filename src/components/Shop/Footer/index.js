@@ -1,15 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { MDBFooter } from 'mdbreact';
 const Footer = () => {
     return(
-        <footer>
+        <MDBFooter id="foot">
             <center>
-                Site géré par l'outil &copy;OnlineShopConfig
+            Site géré par l'outil &copy;OnlineShopConfig
             </center> <br />
             <center>
-                <Link to="/admin" >Accéder à l'espace d'administration</Link>
+                <Link to="/admin" id="footlink">Accéder à l'espace d'administration</Link>
             </center>
-        </footer>
+        </MDBFooter>
     )
 }
 

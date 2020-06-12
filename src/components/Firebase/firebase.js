@@ -45,6 +45,8 @@ class Firebase{
                  console.log("Delete error : ", err);
              })
      }
+
+    
 }
 
 export default Firebase;

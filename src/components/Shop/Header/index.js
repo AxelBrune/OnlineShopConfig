@@ -20,7 +20,7 @@ const Header = () =>{
             </Helmet>
             <header>
                 <Navbar bg="dark" expand="lg" variant="dark">
-                <Navbar.Brand href="/admin" >{shopName}</Navbar.Brand>
+                <Navbar.Brand href="/" >{shopName}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
