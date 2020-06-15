@@ -6,17 +6,31 @@ import {Helmet} from 'react-helmet'
 const Header = () =>{
     const firebase = useContext(firebaseContext);
     const [shopName, setShopName] = useState("");
+    const [headerColor, setHeaderColor] = useState("");
     firebase.db.collection("ShopName").doc("shop").get()
     .then(function(doc){
         setShopName(doc.data().name);
     });
+
+    const styles={
+        headerBack: {
+            backgroundColor: headerColor
+        }
+    }
+
+    firebase.db.collection("headerBackground").doc("back").get()
+    .then(function(doc){
+        setHeaderColor(doc.data().color);
+    })
+
     return(
+        
         <Fragment>
             <Helmet>
                 <title>{shopName}</title>
             </Helmet>
             <header id="adminheader">
-            <Navbar bg="dark" expand="lg" variant="dark">
+            <Navbar /*bg="dark"*/ expand="lg" variant="dark" id="navAdmin" style={styles.headerBack}>
             <Navbar.Brand href="/admin" >Interface administrateur de {shopName}</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">

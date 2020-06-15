@@ -6,6 +6,8 @@ import {firebaseContext} from "../../Firebase";
 import {BsPencil} from 'react-icons/bs';
 import {FaEraser} from "react-icons/fa";
 import { IconContext } from "react-icons";
+import {SketchPicker} from "react-color";
+
 const Home = () =>{
     const firebase = useContext(firebaseContext);    
     const [shopName, setShopName] = useState("");
@@ -21,7 +23,6 @@ const Home = () =>{
     const [show, setShow] = useState(false);
 
 
-    const [selectedProduct, setSelectedProduct] = useState("");
     const [showIdModal, setShowIdModal] = useState(false);
     const [selectedId, setSelectedId] = useState("");
     const [modifName, setModifName] = useState("");
@@ -29,10 +30,25 @@ const Home = () =>{
     const [modifPrice, setModifPrice] = useState("");
 
     const [products, setProducts] = useState([]);
+
+    const [headerBackground,setHeaderBackground] = useState("#343a40");
+    const [showHeaderPicker, setShowHeaderPicker] = useState(false);
     firebase.db.collection("ShopName").doc("shop").get()
         .then(function(doc){
             setShopName(doc.data().name);
         });
+
+    // firebase.db.collection("headerBackground").doc("back").get()
+    // .then(function(doc){
+    //     setHeaderBackground(doc.data().color)
+    // });
+
+    useEffect(()=>{
+        firebase.db.collection("headerBackground").doc("back").get()
+        .then(function(doc){
+            setHeaderBackground(doc.data().color)
+        });
+    }, [])
 
     const fetchProducts = () =>{
         firebase.getProducts()
@@ -60,6 +76,8 @@ const Home = () =>{
             setNameChanged(false);
         });
     },[nameChanged])
+
+    
 
     const changeName = e =>{
         e.preventDefault();
@@ -156,6 +174,14 @@ const Home = () =>{
             console.log(err);
         })
     }
+
+    const handleHeaderColor = (col) => {
+        setHeaderBackground(col.hex);
+        firebase.db.collection("headerBackground").doc("back").update({color: col.hex});
+
+    }
+
+
 
     return(
         <Fragment>
@@ -296,7 +322,21 @@ const Home = () =>{
                             </Form>
                             </Card.Body>
                         </Card>
-                    </Col>
+                </Col>
+                <Col>
+                <h2>Changer la couleur du header </h2>
+                <Button onClick={() => setShowHeaderPicker(true)}>Changer</Button>
+                &nbsp;&nbsp;<input type="text" value={headerBackground} />
+                    <Modal show={showHeaderPicker} onHide={() => setShowHeaderPicker(false)}>
+                        <Modal.Header>Changer la couleur du Header</Modal.Header>
+                        <Modal.Body>
+                            <SketchPicker color={headerBackground} onChange={handleHeaderColor} onChangeComplete={handleHeaderColor} />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={() => setShowHeaderPicker(false)}>Fermer et Sauver</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </Col>
                 </Row>
             </Container>
         </Fragment>

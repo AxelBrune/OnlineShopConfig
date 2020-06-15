@@ -7,11 +7,22 @@ const Header = () =>{
 
     const firebase = useContext(firebaseContext);
     const [shopName, setShopName] = useState("");
-
+    const [headerColor, setHeaderColor] = useState("");
     firebase.db.collection("ShopName").doc("shop").get()
         .then(function(doc){
             setShopName(doc.data().name);
         });
+
+        const styles={
+            headerBack: {
+                backgroundColor: headerColor
+            }
+        }
+    
+        firebase.db.collection("headerBackground").doc("back").get()
+        .then(function(doc){
+            setHeaderColor(doc.data().color);
+        })
 
     return(
         <Fragment>
@@ -19,7 +30,7 @@ const Header = () =>{
                 <title>{shopName}</title>
             </Helmet>
             <header>
-                <Navbar bg="dark" expand="lg" variant="dark">
+                <Navbar /*bg="dark"*/ expand="lg" variant="dark" style={styles.headerBack}>
                 <Navbar.Brand href="/" >{shopName}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
