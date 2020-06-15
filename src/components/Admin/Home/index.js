@@ -32,7 +32,14 @@ const Home = () =>{
     const [products, setProducts] = useState([]);
 
     const [headerBackground,setHeaderBackground] = useState("#343a40");
+    const [footerBackground,setFooterBackground] = useState(() => {
+        firebase.db.collection("footerBackground").doc("back").get()
+        .then(function(doc){
+            setFooterBackground(doc.data().color)
+        })
+    });
     const [showHeaderPicker, setShowHeaderPicker] = useState(false);
+    const [showFooterPicker, setShowFooterPicker] = useState(false);
     firebase.db.collection("ShopName").doc("shop").get()
         .then(function(doc){
             setShopName(doc.data().name);
@@ -47,6 +54,13 @@ const Home = () =>{
         firebase.db.collection("headerBackground").doc("back").get()
         .then(function(doc){
             setHeaderBackground(doc.data().color)
+        });
+    }, [])
+
+    useEffect(() => {
+        firebase.db.collection("footerBackground").doc("back").get()
+        .then(function(doc){
+            setFooterBackground(doc.data().color)
         });
     }, [])
 
@@ -179,6 +193,11 @@ const Home = () =>{
         setHeaderBackground(col.hex);
         firebase.db.collection("headerBackground").doc("back").update({color: col.hex});
 
+    }
+
+    const handleFooterColor = (col) => {
+        setFooterBackground(col.hex);
+        firebase.db.collection("footerBackground").doc("back").update({color: col.hex})
     }
 
 
@@ -324,9 +343,10 @@ const Home = () =>{
                         </Card>
                 </Col>
                 <Col>
-                <h2>Changer la couleur du header </h2>
-                <Button onClick={() => setShowHeaderPicker(true)}>Changer</Button>
-                &nbsp;&nbsp;<input type="text" value={headerBackground} />
+                    <Row>
+                    <h2>Changer la couleur du header </h2>
+                    <Button onClick={() => setShowHeaderPicker(true)}>Changer</Button>
+                        &nbsp;&nbsp;<input type="text" value={headerBackground} />
                     <Modal show={showHeaderPicker} onHide={() => setShowHeaderPicker(false)}>
                         <Modal.Header>Changer la couleur du Header</Modal.Header>
                         <Modal.Body>
@@ -336,6 +356,21 @@ const Home = () =>{
                             <Button onClick={() => setShowHeaderPicker(false)}>Fermer et Sauver</Button>
                         </Modal.Footer>
                     </Modal>
+                    </Row>
+                    <Row>
+                    <h2>Changer la couleur du footer </h2>
+                    <Button onClick={() => setShowFooterPicker(true)}>Changer</Button>
+                    &nbsp;&nbsp;<input type="text" value={footerBackground} />
+                        <Modal show={showFooterPicker} onHide={() => setShowFooterPicker(false)}>
+                            <Modal.Header>Changer la couleur du Footer</Modal.Header>
+                            <Modal.Body>
+                                <SketchPicker color={headerBackground} onChange={handleFooterColor} onChangeComplete={handleFooterColor} />
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button onClick={() => setShowFooterPicker(false)}>Fermer et Sauver</Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </Row>                    
                 </Col>
                 </Row>
             </Container>

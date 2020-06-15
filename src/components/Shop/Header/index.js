@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Navbar,Nav,Form,FormControl,Button} from 'react-bootstrap';
 import {firebaseContext} from "../../Firebase";
 import { Helmet } from 'react-helmet';
+import { withRouter } from 'react-router-dom';
 const Header = () =>{
 
     const firebase = useContext(firebaseContext);
