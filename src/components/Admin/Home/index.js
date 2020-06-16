@@ -354,6 +354,7 @@ const Home = () =>{
                         </Modal.Footer>
                     </Modal>
                     </Row>
+                    <br />
                     <Row>
                     <h2>Changer la couleur du footer </h2>&nbsp;&nbsp;
                     <Button onClick={() => setShowFooterPicker(true)} style={{backgroundColor: footerBackground}}>Changer</Button>

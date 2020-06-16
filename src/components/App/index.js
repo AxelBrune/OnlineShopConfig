@@ -5,7 +5,8 @@ import Home from '../Admin/Home';
 import ShopHomePage from '../Shop/ShopHomePage';
 import Login from '../Admin/Login';
 import ErrorPage from '../ErrorPage';
-import ProductDetail from "../Shop/ProductDetail"
+import ProductDetail from "../Shop/ProductDetail";
+import SearchResult from "../Shop/SearchResult";
 function App(){
     return(
         <Router>
@@ -14,6 +15,7 @@ function App(){
                 <Route exact path="/" component={ShopHomePage} />
                 <Route exact path="/admin/home" component={Home} />
                 <Route path="/product/:id" component={ProductDetail}/>
+                <Route path="/search/:s" component={SearchResult} />
                 <Route  component={ErrorPage} />
             </Switch>
         </Router>
