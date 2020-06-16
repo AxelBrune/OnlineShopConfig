@@ -200,8 +200,6 @@ const Home = () =>{
         firebase.db.collection("footerBackground").doc("back").update({color: col.hex})
     }
 
-
-
     return(
         <Fragment>
             <Modal show={show} onHide={handleClose}>
@@ -344,9 +342,8 @@ const Home = () =>{
                 </Col>
                 <Col>
                     <Row>
-                    <h2>Changer la couleur du header </h2>
-                    <Button onClick={() => setShowHeaderPicker(true)}>Changer</Button>
-                        &nbsp;&nbsp;<input type="text" value={headerBackground} />
+                    <h2>Changer la couleur du header </h2>&nbsp;&nbsp;
+                    <Button onClick={() => setShowHeaderPicker(true)} style={{backgroundColor: headerBackground}}>Changer</Button>
                     <Modal show={showHeaderPicker} onHide={() => setShowHeaderPicker(false)}>
                         <Modal.Header>Changer la couleur du Header</Modal.Header>
                         <Modal.Body>
@@ -358,9 +355,8 @@ const Home = () =>{
                     </Modal>
                     </Row>
                     <Row>
-                    <h2>Changer la couleur du footer </h2>
-                    <Button onClick={() => setShowFooterPicker(true)}>Changer</Button>
-                    &nbsp;&nbsp;<input type="text" value={footerBackground} />
+                    <h2>Changer la couleur du footer </h2>&nbsp;&nbsp;
+                    <Button onClick={() => setShowFooterPicker(true)} style={{backgroundColor: footerBackground}}>Changer</Button>
                         <Modal show={showFooterPicker} onHide={() => setShowFooterPicker(false)}>
                             <Modal.Header>Changer la couleur du Footer</Modal.Header>
                             <Modal.Body>
