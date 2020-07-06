@@ -36,7 +36,7 @@ class Firebase{
         })
     }
 
-     deleteProduct = id =>{
+    deleteProduct = id =>{
              this.db.doc(`products/${id}`).delete()
              .then(function(){
                  console.log(`Élément d'id ${id} supprimé`);
@@ -44,7 +44,48 @@ class Firebase{
              }).catch(function(err){
                  console.log("Delete error : ", err);
              })
-     }
+            }
+
+    deleteUser = id =>{
+        this.db.doc(`users/${id}`).delete()
+        .then(function(){
+            console.log(`Élément d'id ${id} supprimé`);
+            window.location.reload(false);
+        }).catch(function(err){
+            console.log("Delete error : ", err);
+        })
+    }
+    
+    getUsers = () => {
+        return new Promise((onSuccess, onFail) => {
+            this.db.collection("users").get()
+            .then(querySnapshot => {
+                onSuccess(querySnapshot);
+            })
+            .catch(error => onFail(error))
+        })
+    }
+
+    getCodes = () => {
+        return new Promise((onSuccess, onFail) => {
+            this.db.collection("Reduc").get()
+            .then(querySnapshot => {
+                onSuccess(querySnapshot);
+            })
+            .catch(error => onFail(error))
+        })
+    }
+
+    deleteCode = id => {
+        this.db.doc(`Reduc/${id}`).delete()
+        .then(function(){
+            console.log(`Élément d'id ${id} supprimé`);
+            window.location.reload(false);
+        }).catch(function(err){
+            console.log("Delete error : ", err);
+        })
+    }
+
 
     
 }

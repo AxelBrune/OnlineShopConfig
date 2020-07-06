@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Link} from 'react-router-dom';
 import { MDBFooter } from 'mdbreact';
 import {firebaseContext} from "../../Firebase";
-const Footer = () => {
+const FooterProduct = () => {
     const firebase = useContext(firebaseContext);
     const [headerColor, setHeaderColor] = useState("#343a40");
 
@@ -18,7 +18,7 @@ const Footer = () => {
     }
 
     return(
-        <MDBFooter id="foot" style={styles.footerBack} >
+        <MDBFooter id="foot" style={styles.footerBack} className="fixed-bottom">
             <center>
             Site géré par l'outil &copy;OnlineShopConfig
             </center> <br />
@@ -29,4 +29,4 @@ const Footer = () => {
     )
 }
 
-export default Footer;
+export default FooterProduct;
