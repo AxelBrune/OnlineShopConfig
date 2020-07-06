@@ -32,11 +32,6 @@ const Header = (props) =>{
         })
 
 
-    const handleDisconnect = () => {
-        setUserMail("");
-        setUserPassword("");
-    }
-
 
     return(
         <Fragment>
@@ -46,21 +41,26 @@ const Header = (props) =>{
             </Helmet>
             <header>
                 <Navbar /*bg="dark"*/ expand="lg" variant="dark" style={styles.headerBack}>
-                <Link to={{pathname: `/`, state: {mail: userMail, password: userPassword, ident: userId, cart: userCart}}}><Navbar.Brand href="/" >{shopName}</Navbar.Brand></Link>
+                <Link to={{pathname: `/home`, state: {mail: userMail, password: userPassword, ident: userId, cart: userCart}}}><Navbar.Brand href="/" >{shopName}</Navbar.Brand></Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                     </Nav>
                     <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2"
+                    {
+                        userMail  && userPassword ? <Fragment><FormControl type="text" placeholder="Search" className="mr-sm-2"
                         value={search} onChange={e => setSearch(e.target.value)}
                     />
                     <Link to={`/search/${search}`}><Button variant="outline-success">Search</Button></Link>
-                    &nbsp;&nbsp;
-                    {
-                        userMail  && userPassword ? <Fragment><Link to={{pathname: `/cart/${userId}`, state: {mail: userMail, password: userPassword, ident: userId, cart: userCart}}}><Button>{userMail}</Button></Link>&nbsp;&nbsp;<Button onClick={handleDisconnect}>Deconnexion</Button></Fragment> 
+                    &nbsp;&nbsp;</Fragment> 
                         : 
-                        <Link to="/connect"><Button>Se connecter / Créer un compte</Button></Link> 
+                        <p></p>
+                    }
+                    
+                    {
+                        userMail  && userPassword ? <Fragment><Link to={{pathname: `/cart/${userId}`, state: {mail: userMail, password: userPassword, ident: userId, cart: userCart}}}><Button>{userMail}</Button></Link>&nbsp;&nbsp;<Link to='/'><Button>Deconnexion</Button></Link></Fragment> 
+                        : 
+                        <p></p>
                     }
                     </Form>
                 </Navbar.Collapse>

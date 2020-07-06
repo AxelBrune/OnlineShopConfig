@@ -42,6 +42,23 @@ const UserCart = (props) => {
         })
         console.log(cartDatas);
     }, [])
+
+    const handleBuy = e => {
+        e.preventDefault();
+        var order = firebase.db.collection("orders").doc();
+        var dt=new Date();
+        order.set({
+            date: dt,
+            products: cartDatas
+        })
+       .then(function(){
+            console.log("Commande enregistrée");
+           
+        })
+        .catch(function(err){
+            console.log("Erreur : ", err);
+        })
+    }
     return(
         <Fragment>
             <Header mail={userMail} password={userPassword} ident={userId} cart={userCart}/>
@@ -68,7 +85,7 @@ const UserCart = (props) => {
                         <h1>Total : {cartTotal} €</h1>
                     </Col>
                     <Col>
-                        <Button>Acheter</Button>
+                        <Button onClick={handleBuy}>Acheter</Button>
                     </Col>
                 </Row>
             </Container>

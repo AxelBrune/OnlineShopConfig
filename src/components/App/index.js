@@ -19,7 +19,7 @@ function App(){
         <Router>
             <Switch>
                 <Route exact  path="/admin" component={Login} />
-                <Route exact path="/" component={ShopHomePage} />
+                <Route exact path="/" component={Connection} />
                 <Route exact path="/admin/home" component={Home} />
                 <Route path="/product/:id" component={ProductDetail}/>
                 <Route path="/search/:s" component={SearchResult} />
@@ -28,7 +28,7 @@ function App(){
                 <Route path="/admin/custom" component={Customization} />
                 <Route path="/admin/users" component={UserManagement} />
                 <Route path="/admin/reduc" component={ReducCode} />
-                <Route path="/connect" component={Connection} />
+                <Route path="/home" component={ShopHomePage} />
                 <Route path="/cart/:id" component={UserCart} />
                 <Route  component={ErrorPage} />
             </Switch>

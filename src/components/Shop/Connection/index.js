@@ -13,7 +13,7 @@ const Connection = () => {
     const [showError, setShowError] = useState(false);
     const [ident, setIdent] = useState("");
     const [cart, setCart] = useState("");
-
+    const [pseudo, setPseudo] = useState("");
     useEffect(()=>{
         firebase.db.collection("users").where("mail", "==", email).where("password", "==", password).get()
         .then(function(querySnapshot){
@@ -25,6 +25,7 @@ const Connection = () => {
                     setIdent(doc.id);
                     setCart(doc.data().cart);
                     setConnected(true);
+                    setPseudo(doc.data().pseudo);
                 });
             }
             else{
@@ -69,7 +70,7 @@ const Connection = () => {
                             </Card.Body>
                             <Card.Footer class="text-center">
                                  {
-                                    connected ? <Link to={{pathname: '/', state: {mail: email, password: password, ident: ident, cart: cart}}}><Button>Se connecter</Button></Link> : <Button disabled>Se connecter</Button>
+                                    connected ? <Link to={{pathname: '/home', state: {mail: email, password: password, ident: ident, cart: cart}}}><Button>Se connecter</Button></Link> : <Button disabled>Se connecter</Button>
                                  }
                             </Card.Footer>
                         </Card>
